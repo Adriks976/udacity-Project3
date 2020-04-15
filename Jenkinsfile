@@ -1,3 +1,5 @@
+def website_endpoint = "http://adrik-udacity-static.s3-website-eu-west-1.amazonaws.com/"
+
 pipeline {
   agent any
   stages {
@@ -14,6 +16,12 @@ pipeline {
                  }
              }
         }
+    stage('Verify Website') {
+      steps {
+        sh 'curl -sSf ${website_endpoint} > /dev/null'
+      }
+    }
+    
   }
 }
   
