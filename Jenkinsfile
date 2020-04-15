@@ -20,6 +20,7 @@ pipeline {
     }
     stage('Verify Website') {
       steps {
+        sh 'echo "Verifying website is UP"'
         sh "curl -sSf ${website_endpoint} > /dev/null"
       }
     }
