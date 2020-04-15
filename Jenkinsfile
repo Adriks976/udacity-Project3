@@ -18,7 +18,7 @@ pipeline {
         }
     stage('Verify Website') {
       steps {
-        sh "curl -sSf "${website_endpoint} > /dev/null"
+        sh "curl -sSf ${website_endpoint} > /dev/null"
       }
     }
     
