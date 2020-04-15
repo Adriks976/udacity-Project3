@@ -10,12 +10,14 @@ pipeline {
     }
     stage('Upload to AWS') {
       steps {
-        withAWS(region:'eu-west-1',credentials:'aws-static') {
-          sh 'echo "Uploading content with AWS creds"'
-          s3Upload(pathStyleAccessEnabled: true, payloadSigningEnabled: true, file:'index.html', bucket:'adrik-udacity-static')
-                 }
-             }
+        retry(3) {
+          withAWS(region:'eu-west-1',credentials:'aws-static') {
+            sh 'echo "Uploading content with AWS creds"'
+            s3Upload(pathStyleAccessEnabled: true, payloadSigningEnabled: true, file:'index.html', bucket:'adrik-udacity-static')
+          }
         }
+      }
+    }
     stage('Verify Website') {
       steps {
         sh "curl -sSf ${website_endpoint} > /dev/null"
